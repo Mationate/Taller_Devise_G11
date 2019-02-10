@@ -7,6 +7,11 @@ class HistoriesController < ApplicationController
     @histories = History.all
   end
 
+  def my_histories
+   @histories = current_user.histories 
+  end
+  
+
   # GET /histories/1
   # GET /histories/1.json
   def show
@@ -19,6 +24,7 @@ class HistoriesController < ApplicationController
 
   # GET /histories/1/edit
   def edit
+    redirect_to histories_path, alert: 'Esta historia no es tuya' and return unless @history.user == current_user && current_user.admin == true
   end
 
   # POST /histories
@@ -55,6 +61,7 @@ class HistoriesController < ApplicationController
   # DELETE /histories/1
   # DELETE /histories/1.json
   def destroy
+    redirect_to histories_path, alert: 'Esta historia no es tuya' and return unless @history.user == current_user or current_user.admin == true
     @history.destroy
     respond_to do |format|
       format.html { redirect_to histories_url, notice: 'History was successfully destroyed.' }

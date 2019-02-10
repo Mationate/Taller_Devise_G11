@@ -1,0 +1,8 @@
+<ul>
+  <% @histories.each do |history| %>
+    <li><%= history.title %></li>
+    <li><%= history.content %></li>
+    <%= image_tag(history.picture.thumb)  %>
+    <br>
+  <% end %>
+</ul>
